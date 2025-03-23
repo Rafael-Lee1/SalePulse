@@ -5,6 +5,7 @@ import { StatCardIcon } from "./StatCardIcon";
 import { StatCardProgress } from "./StatCardProgress";
 import { StatCardChangeIndicator } from "./StatCardChangeIndicator";
 import { StatCardMiniChart } from "./StatCardMiniChart";
+import { AnimatedNumber } from "@/components/ui/animated-number";
 
 interface StatCardProps {
   title: string;
@@ -19,6 +20,12 @@ export function StatCard({ title, value, change, icon }: StatCardProps) {
   
   const isPositive = change >= 0;
   
+  // Extract numeric value from the value string (e.g., "$1,234" -> 1234)
+  const numericValue = parseInt(value.replace(/[^0-9]/g, ''), 10);
+  
+  // Extract currency symbol if present
+  const currencySymbol = value.match(/^\D+/)?.[0] || '';
+  
   return (
     <div 
       className={cn(
@@ -32,7 +39,12 @@ export function StatCard({ title, value, change, icon }: StatCardProps) {
       <div className="flex flex-col gap-2">
         <div className="flex justify-between items-center">
           <span className="text-white text-[15px] font-semibold">
-            {value}
+            {currencySymbol}
+            <AnimatedNumber 
+              value={numericValue} 
+              showPulse={true} 
+              pulseColor={isPositive ? "#A9DFD8" : "#F99999"}
+            />
           </span>
           <StatCardIcon icon={icon} isPositive={isPositive} />
         </div>

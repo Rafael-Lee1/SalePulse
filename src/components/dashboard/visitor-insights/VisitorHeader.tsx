@@ -1,5 +1,6 @@
 
 import { TrendingUp, Calendar, Users } from "lucide-react";
+import { AnimatedNumber } from "@/components/ui/animated-number";
 
 interface VisitorHeaderProps {
   totalVisitors: number;
@@ -19,7 +20,14 @@ export function VisitorHeader({ totalVisitors }: VisitorHeaderProps) {
         </div>
         <div className="flex items-center gap-1">
           <Users size={14} className="text-[#A9DFD8]" />
-          <span className="text-[#A9DFD8] text-xs font-medium">{totalVisitors.toLocaleString()} total</span>
+          <span className="text-[#A9DFD8] text-xs font-medium">
+            <AnimatedNumber 
+              value={totalVisitors} 
+              suffix=" total" 
+              showPulse={true} 
+              pulseColor="#A9DFD8"
+            />
+          </span>
         </div>
       </div>
     </div>

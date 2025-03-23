@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import { AnimatedChart } from '@/components/ui/chart/animated-chart';
+import { AnimatedNumber } from '@/components/ui/animated-number';
 
 export default function SalesReport() {
   const [salesData, setSalesData] = useState([
@@ -20,6 +21,12 @@ export default function SalesReport() {
     { name: 'Dec', sales: 48284 },
   ]);
   
+  // Calculate summary values
+  const totalSales = salesData.reduce((sum, item) => sum + item.sales, 0);
+  const revenue = Math.round(totalSales * 0.8);
+  const expenses = Math.round(totalSales * 0.2);
+  const profit = revenue - expenses;
+  
   // Simulate real-time data updates
   useEffect(() => {
     const interval = setInterval(() => {
@@ -33,12 +40,6 @@ export default function SalesReport() {
     
     return () => clearInterval(interval);
   }, []);
-  
-  // Calculate summary values
-  const totalSales = salesData.reduce((sum, item) => sum + item.sales, 0);
-  const revenue = Math.round(totalSales * 0.8);
-  const expenses = Math.round(totalSales * 0.2);
-  const profit = revenue - expenses;
 
   return (
     <div className="flex-1">
@@ -53,7 +54,13 @@ export default function SalesReport() {
             transition={{ duration: 0.3 }}
           >
             <h3 className="text-[#87888C] text-sm">Total Sales</h3>
-            <p className="text-white text-2xl font-bold">${totalSales.toLocaleString()}</p>
+            <p className="text-white text-2xl font-bold">$
+              <AnimatedNumber 
+                value={totalSales} 
+                showPulse={true}
+                pulseColor="#A9DFD8"
+              />
+            </p>
           </motion.div>
           <motion.div 
             className="bg-[#21222D] p-4 rounded-[10px]"
@@ -62,7 +69,13 @@ export default function SalesReport() {
             transition={{ duration: 0.3, delay: 0.1 }}
           >
             <h3 className="text-[#87888C] text-sm">Revenue</h3>
-            <p className="text-[#A9DFD8] text-2xl font-bold">${revenue.toLocaleString()}</p>
+            <p className="text-[#A9DFD8] text-2xl font-bold">$
+              <AnimatedNumber 
+                value={revenue} 
+                showPulse={true}
+                pulseColor="#A9DFD8"
+              />
+            </p>
           </motion.div>
           <motion.div 
             className="bg-[#21222D] p-4 rounded-[10px]"
@@ -71,7 +84,13 @@ export default function SalesReport() {
             transition={{ duration: 0.3, delay: 0.2 }}
           >
             <h3 className="text-[#87888C] text-sm">Expenses</h3>
-            <p className="text-[#FEB95A] text-2xl font-bold">${expenses.toLocaleString()}</p>
+            <p className="text-[#FEB95A] text-2xl font-bold">$
+              <AnimatedNumber 
+                value={expenses} 
+                showPulse={true}
+                pulseColor="#FEB95A"
+              />
+            </p>
           </motion.div>
           <motion.div 
             className="bg-[#21222D] p-4 rounded-[10px]"
@@ -80,7 +99,13 @@ export default function SalesReport() {
             transition={{ duration: 0.3, delay: 0.3 }}
           >
             <h3 className="text-[#87888C] text-sm">Profit</h3>
-            <p className="text-[#F2C8ED] text-2xl font-bold">${profit.toLocaleString()}</p>
+            <p className="text-[#F2C8ED] text-2xl font-bold">$
+              <AnimatedNumber 
+                value={profit} 
+                showPulse={true}
+                pulseColor="#F2C8ED"
+              />
+            </p>
           </motion.div>
         </div>
         
@@ -184,14 +209,27 @@ export default function SalesReport() {
                 </tr>
               </thead>
               <tbody>
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <tr key={i} className="border-b border-[#2B2B36] last:border-0">
-                    <td className="py-4 text-white text-sm">Product {i}</td>
-                    <td className="py-4 text-white text-sm">Category {i}</td>
-                    <td className="py-4 text-white text-sm">{Math.floor(Math.random() * 500)} units</td>
-                    <td className="py-4 text-white text-sm">${Math.floor(Math.random() * 10000)}</td>
-                  </tr>
-                ))}
+                {[1, 2, 3, 4, 5].map((i) => {
+                  const productSold = Math.floor(Math.random() * 500);
+                  const productRevenue = Math.floor(Math.random() * 10000);
+                  
+                  return (
+                    <tr key={i} className="border-b border-[#2B2B36] last:border-0">
+                      <td className="py-4 text-white text-sm">Product {i}</td>
+                      <td className="py-4 text-white text-sm">Category {i}</td>
+                      <td className="py-4 text-white text-sm">
+                        <AnimatedNumber 
+                          value={productSold} 
+                          suffix=" units" 
+                          useSpring={false}
+                        />
+                      </td>
+                      <td className="py-4 text-white text-sm">$
+                        <AnimatedNumber value={productRevenue} />
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

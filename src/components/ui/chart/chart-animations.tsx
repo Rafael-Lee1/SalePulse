@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import * as React from "react";
 
@@ -78,15 +79,22 @@ export const updateChartData = <T extends Record<string, any>>(
   changeChance: number = 0.5
 ): T[] => {
   return data.map(item => {
+    // Create a shallow copy of the item
     const newItem = { ...item } as T;
     
+    // Update specified keys with random changes
     keys.forEach(key => {
       if (Math.random() > changeChance) {
         const direction = Math.random() > 0.5 ? 1 : -1;
         const change = Math.floor(Math.random() * (maxChange - minChange + 1)) + minChange;
         const currentValue = newItem[key];
+        
+        // Only modify if the current value is a number
         if (typeof currentValue === 'number') {
-          newItem[key] = Math.max(0, currentValue + direction * change) as unknown as T[Extract<keyof T, string>];
+          // Use type assertion to handle the generic constraint
+          const newValue = Math.max(0, currentValue + direction * change);
+          // We need to assert to the correct type to satisfy TypeScript
+          newItem[key] = newValue as unknown as T[keyof T];
         }
       }
     });

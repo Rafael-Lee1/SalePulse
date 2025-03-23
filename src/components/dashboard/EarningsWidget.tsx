@@ -1,6 +1,8 @@
 
 import { useState, useEffect } from "react";
 import { DollarSign, TrendingUp } from "lucide-react";
+import { motion } from "framer-motion";
+import { AnimatedNumber } from "@/components/ui/animated-number";
 
 export function EarningsWidget() {
   const [percentage, setPercentage] = useState(0);
@@ -62,7 +64,12 @@ export function EarningsWidget() {
         
         <div className="flex items-baseline gap-1">
           <div className="text-[#A9DFD8] text-xl font-bold">
-            ${amount.toFixed(2)}
+            $<AnimatedNumber 
+              value={amount} 
+              formatter={(val) => val.toFixed(2)} 
+              showPulse={true}
+              pulseColor="#A9DFD8"
+            />
           </div>
           <div className="text-[#87888C] text-[10px] flex items-center">
             <TrendingUp size={10} className="text-[#A9DFD8] mr-0.5" />
@@ -97,7 +104,14 @@ export function EarningsWidget() {
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center flex-col">
-          <span className="text-white text-2xl font-bold">{percentage}%</span>
+          <span className="text-white text-2xl font-bold">
+            <AnimatedNumber 
+              value={percentage} 
+              suffix="%" 
+              showPulse={true}
+              pulseColor="#A9DFD8"
+            />
+          </span>
           <span className="text-[#87888C] text-[10px]">Monthly Goal</span>
         </div>
         

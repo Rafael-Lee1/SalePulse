@@ -4,6 +4,7 @@ import { Line, LineChart, ResponsiveContainer, Tooltip, Area, AreaChart } from "
 import { TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
 import { AnimatedChart } from "@/components/ui/chart/animated-chart";
+import { AnimatedNumber } from "@/components/ui/animated-number";
 
 export function CustomerFulfillment() {
   const [chartData, setChartData] = useState([
@@ -153,7 +154,13 @@ export function CustomerFulfillment() {
             <div className="w-1.5 h-1.5 bg-[#A9DFD8] rounded-full" />
             <span className="text-[#A0A0A0] text-[10px]">Last Month</span>
           </div>
-          <span className="text-white text-[10px] font-medium">${Math.floor(chartData[4]?.lastMonth).toLocaleString()}</span>
+          <span className="text-white text-[10px] font-medium">$
+            <AnimatedNumber 
+              value={chartData[4]?.lastMonth || 0} 
+              showPulse={true} 
+              pulseColor="#A9DFD8"
+            />
+          </span>
         </div>
         
         <div 
@@ -164,7 +171,13 @@ export function CustomerFulfillment() {
             <div className="w-1.5 h-1.5 bg-[#F2C8ED] rounded-full" />
             <span className="text-[#A0A0A0] text-[10px]">This Month</span>
           </div>
-          <span className="text-white text-[10px] font-medium">${Math.floor(chartData[4]?.thisMonth).toLocaleString()}</span>
+          <span className="text-white text-[10px] font-medium">$
+            <AnimatedNumber 
+              value={chartData[4]?.thisMonth || 0} 
+              showPulse={true} 
+              pulseColor="#F2C8ED"
+            />
+          </span>
         </div>
       </div>
       
