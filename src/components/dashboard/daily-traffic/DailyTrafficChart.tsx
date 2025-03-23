@@ -6,7 +6,7 @@ import {
 } from "recharts";
 import { TrendingUp, Clock, Activity } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { AnimatedChart, dataPointAnimations } from "@/components/ui/chart/animated-chart";
+import { AnimatedChart, dataPointAnimation } from "@/components/ui/chart/animated-chart";
 
 // Type for the traffic data points
 interface TrafficDataPoint {
@@ -353,4 +353,3 @@ export function DailyTrafficChart() {
     </motion.div>
   );
 }
-

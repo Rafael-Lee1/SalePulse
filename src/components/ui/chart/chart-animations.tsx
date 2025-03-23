@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import * as React from "react";
 
@@ -59,7 +58,6 @@ export const chartAnimationVariants = {
   })
 };
 
-// Animation for chart data points
 export const dataPointAnimations = {
   pulse: {
     scale: [1, 1.2, 1],
@@ -72,7 +70,6 @@ export const dataPointAnimations = {
   }
 };
 
-// Function to create dynamic data with random fluctuations
 export const updateChartData = <T extends Record<string, any>>(
   data: T[], 
   keys: string[],
@@ -81,17 +78,19 @@ export const updateChartData = <T extends Record<string, any>>(
   changeChance: number = 0.5
 ): T[] => {
   return data.map(item => {
-    const newItem = { ...item };
+    const newItem = { ...item } as T;
     
     keys.forEach(key => {
       if (Math.random() > changeChance) {
         const direction = Math.random() > 0.5 ? 1 : -1;
         const change = Math.floor(Math.random() * (maxChange - minChange + 1)) + minChange;
-        newItem[key] = Math.max(0, newItem[key] + direction * change);
+        const currentValue = newItem[key];
+        if (typeof currentValue === 'number') {
+          newItem[key] = Math.max(0, currentValue + direction * change) as unknown as T[Extract<keyof T, string>];
+        }
       }
     });
     
     return newItem;
   });
 };
-
