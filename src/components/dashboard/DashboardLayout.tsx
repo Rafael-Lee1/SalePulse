@@ -1,7 +1,7 @@
-
 import { motion } from "framer-motion";
 import { SalesStats } from "./sales-stats";
 import { VisitorInsights } from "./visitor-insights";
+import { DailyTrafficChart } from "./daily-traffic";
 import { lazy, Suspense } from "react";
 
 // Lazy load components that are further down the page
@@ -106,17 +106,8 @@ export function DashboardLayout() {
             </div>
           </motion.div>
           
-          <motion.div 
-            className="w-full bg-[#21222D]/70 backdrop-blur-sm p-5 rounded-[16px] border border-white/5 shadow-lg flex-1"
-            variants={itemVariants}
-          >
-            <h2 className="text-white text-[15px] font-semibold mb-4">Daily Traffic</h2>
-            <div className="h-[150px] w-full relative">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <p className="text-[#87888C] text-sm">Traffic chart will appear here</p>
-              </div>
-            </div>
-          </motion.div>
+          {/* Daily Traffic Chart - Replacing the placeholder */}
+          <DailyTrafficChart />
         </div>
       </motion.div>
       
