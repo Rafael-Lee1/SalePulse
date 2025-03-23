@@ -24,7 +24,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSkeleton,
-} from "./sidebar-menu"
+} from "./menu"
 import {
   SidebarMenuSub,
   SidebarMenuSubButton,
