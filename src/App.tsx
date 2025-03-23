@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { NavigationProvider } from "@/contexts/NavigationContext";
+import { SettingsProvider } from "@/contexts/SettingsContext";
 
 // Layout
 import AppLayout from "./layouts/AppLayout";
@@ -29,31 +30,33 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <NavigationProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            
-            <Route path="/" element={<AppLayout />}>
-              <Route index element={<Dashboard />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="leaderboard" element={<Leaderboard />} />
-              <Route path="order" element={<Order />} />
-              <Route path="product" element={<Product />} />
-              <Route path="sales-report" element={<SalesReport />} />
-              <Route path="message" element={<Message />} />
-              <Route path="settings" element={<Settings />} />
-              <Route path="favourite" element={<Favourite />} />
-              <Route path="history" element={<History />} />
-              <Route path="signout" element={<Signout />} />
-            </Route>
-            
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
+      <SettingsProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              
+              <Route path="/" element={<AppLayout />}>
+                <Route index element={<Dashboard />} />
+                <Route path="profile" element={<Profile />} />
+                <Route path="leaderboard" element={<Leaderboard />} />
+                <Route path="order" element={<Order />} />
+                <Route path="product" element={<Product />} />
+                <Route path="sales-report" element={<SalesReport />} />
+                <Route path="message" element={<Message />} />
+                <Route path="settings" element={<Settings />} />
+                <Route path="favourite" element={<Favourite />} />
+                <Route path="history" element={<History />} />
+                <Route path="signout" element={<Signout />} />
+              </Route>
+              
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </SettingsProvider>
     </NavigationProvider>
   </QueryClientProvider>
 );
