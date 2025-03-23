@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { MainContent } from "@/components/dashboard/MainContent";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useNavigation } from "@/contexts/NavigationContext";
+import { motion } from "framer-motion";
 
 export default function Dashboard() {
   const isMobile = useIsMobile();
@@ -19,7 +20,12 @@ export default function Dashboard() {
   }, []);
   
   return (
-    <div className={`w-full ${isMobile ? 'mt-2' : ''}`}>
+    <motion.div 
+      className={`w-full ${isMobile ? 'mt-2' : ''}`}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       {isLoading ? (
         <div className="w-full h-[60vh] flex items-center justify-center">
           <div className="relative w-16 h-16">
@@ -29,6 +35,6 @@ export default function Dashboard() {
       ) : (
         <MainContent />
       )}
-    </div>
+    </motion.div>
   );
 }

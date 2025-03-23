@@ -20,10 +20,12 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuItem,
-  SidebarMenuButton
+  SidebarMenuButton,
+  SidebarFooter
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export function AppSidebar() {
   const { activeTab, setActiveTab } = useNavigation();
@@ -54,8 +56,24 @@ export function AppSidebar() {
     setActiveTab(tab);
   };
 
+  // Animation variants for staggered menu items
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05
+      }
+    }
+  };
+  
+  const itemVariants = {
+    hidden: { opacity: 0, x: -20 },
+    show: { opacity: 1, x: 0 }
+  };
+
   return (
-    <Sidebar className="w-[200px] max-w-[250px] h-[815px] bg-[#171821]">
+    <Sidebar className="w-[240px] max-w-[250px] bg-[#171821]/90 backdrop-blur-lg border-r border-white/5 rounded-xl overflow-hidden">
       <SidebarHeader className="p-[25px] justify-between">
         <div>
           <svg
@@ -86,38 +104,69 @@ export function AppSidebar() {
           </svg>
         </div>
       </SidebarHeader>
-      <SidebarContent className="p-2.5 gap-2.5">
+
+      <SidebarContent className="p-3 gap-3">
         <SidebarMenu>
-          {navItems.map((item) => {
-            const isActive = 
-              (item.path === "/" && activeTab === "dashboard") || 
-              (item.path !== "/" && activeTab === item.path.substring(1));
-            
-            return (
-              <SidebarMenuItem key={item.name}>
-                <SidebarMenuButton
-                  isActive={isActive}
-                  asChild
-                  className={cn(
-                    "flex items-center gap-2 px-4 py-2.5 rounded-md transition-all duration-200 w-full",
-                    isActive
-                      ? "bg-[#A9DFD8] text-[#171821] font-medium"
-                      : "text-[#87888C] hover:text-white hover:bg-[#21222D]"
-                  )}
-                >
-                  <Link
-                    to={item.path}
-                    onClick={() => handleNavigation(item.path)}
-                  >
-                    {item.icon}
-                    <span className="text-sm">{item.name}</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            );
-          })}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="show"
+            className="flex flex-col gap-2"
+          >
+            {navItems.map((item) => {
+              const isActive = 
+                (item.path === "/" && activeTab === "dashboard") || 
+                (item.path !== "/" && activeTab === item.path.substring(1));
+              
+              return (
+                <motion.div key={item.name} variants={itemVariants}>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton
+                      isActive={isActive}
+                      asChild
+                      className={cn(
+                        "flex items-center gap-2.5 px-4 py-2.5 rounded-lg transition-all duration-200 w-full",
+                        isActive
+                          ? "bg-gradient-to-r from-[#A9DFD8]/90 to-[#A9DFD8]/80 text-[#171821] font-medium shadow-lg shadow-[#A9DFD8]/20"
+                          : "text-[#87888C] hover:text-white hover:bg-white/5"
+                      )}
+                    >
+                      <Link
+                        to={item.path}
+                        onClick={() => handleNavigation(item.path)}
+                      >
+                        {item.icon}
+                        <span className="text-sm">{item.name}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </motion.div>
+              );
+            })}
+          </motion.div>
         </SidebarMenu>
       </SidebarContent>
+
+      <SidebarFooter className="p-4 border-t border-white/5 mt-auto">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-full overflow-hidden border border-white/10">
+              <img 
+                src="https://randomuser.me/api/portraits/men/32.jpg" 
+                alt="Profile" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="text-xs">
+              <div className="text-white font-medium">John Doe</div>
+              <div className="text-[#87888C]">Admin</div>
+            </div>
+          </div>
+          <button className="p-1.5 rounded-md hover:bg-white/5 transition-colors">
+            <Settings size={14} className="text-[#87888C]" />
+          </button>
+        </div>
+      </SidebarFooter>
     </Sidebar>
   );
 }

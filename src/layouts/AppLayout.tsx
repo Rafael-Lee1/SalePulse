@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { AppSidebar } from "@/components/dashboard/AppSidebar";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 
 export default function AppLayout() {
   const isMobile = useIsMobile();
@@ -17,13 +17,13 @@ export default function AppLayout() {
   }, []);
 
   return (
-    <div className="w-full min-h-screen bg-[#30313A] p-6 max-md:p-4 max-sm:p-3">
+    <div className="w-full min-h-screen bg-gradient-to-br from-[#252634] to-[#30313A] p-6 max-md:p-4 max-sm:p-3">
       <SidebarProvider>
-        <div className={`flex gap-6 w-full ${isMobile ? 'flex-col' : ''}`}>
+        <div className="flex w-full gap-6">
           <AppSidebar />
-          <div className={`flex-1 ${isMobile ? 'mt-12' : ''}`}>
+          <SidebarInset className="flex-1 rounded-xl overflow-hidden bg-[#30313A]/50 backdrop-blur-sm border border-white/5">
             <Outlet />
-          </div>
+          </SidebarInset>
         </div>
       </SidebarProvider>
     </div>
