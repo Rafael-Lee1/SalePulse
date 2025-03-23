@@ -87,14 +87,16 @@ export const updateChartData = <T extends Record<string, any>>(
       if (Math.random() > changeChance) {
         const direction = Math.random() > 0.5 ? 1 : -1;
         const change = Math.floor(Math.random() * (maxChange - minChange + 1)) + minChange;
-        const currentValue = newItem[key];
+        const currentValue = item[key];
         
         // Only modify if the current value is a number
         if (typeof currentValue === 'number') {
-          // Use type assertion to handle the generic constraint
-          const newValue = Math.max(0, currentValue + direction * change);
-          // We need to assert to the correct type to satisfy TypeScript
-          newItem[key] = newValue as unknown as T[keyof T];
+          // Create a new object with the updated value
+          // This avoids directly modifying the generic type T
+          const updatedValue = Math.max(0, currentValue + direction * change);
+          
+          // Use type assertion with a Record to safely assign the property
+          (newItem as Record<string, any>)[key] = updatedValue;
         }
       }
     });
