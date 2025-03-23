@@ -1,69 +1,20 @@
-# Welcome to your Lovable project
+<p align="center">
+  <img width="460" height="300" src="https://github.com/Rafael-Lee1/Icons/blob/c7775933dc9ad92de9eaf42f20b1563ebfeb193b/salepulse.png">
+</p>
+<h1 align="center"> SalePulse </h1>
 
-## Project info
+<img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge"/>
 
-**URL**: https://lovable.dev/projects/33a84382-24f8-466f-a644-8baeb55438b3
+![GitHub Org's stars](https://img.shields.io/gitlab/contributors/Rafael-Lee1)
 
-## How can I edit this code?
+Aplicativo de Monitoramento de Vendas e Projeções - Desenvolvido com Vite, React e Tailwind CSS
 
-There are several ways of editing your application.
+**SalePulse** é uma plataforma moderna e responsiva para o monitoramento de vendas em tempo real. Desenvolvido com **Vite**, **React** e **Tailwind CSS**, o aplicativo oferece um dashboard interativo e dinâmico que permite aos usuários visualizar métricas de vendas e projeções de crescimento de maneira clara e intuitiva. 
 
-**Use Lovable**
+Com **gráficos animados** e **dados em tempo real**, o **SalePulse** facilita a visualização de informações vitais, incluindo as vendas realizadas até o momento e o projetado para o futuro. Além disso, ele fornece **sugestões inteligentes** para ajudar nas decisões estratégicas de vendas e compras, otimizando o desempenho das empresas.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/33a84382-24f8-466f-a644-8baeb55438b3) and start prompting.
+A plataforma também é altamente responsiva, garantindo uma experiência de usuário excepcional em qualquer dispositivo, seja em desktop ou mobile. O **SalePulse** é ideal para empresas que buscam **controle total sobre suas vendas** e desejam **melhorar seu desempenho** com insights baseados em dados.
 
-Changes made via Lovable will be committed automatically to this repo.
+# 📁 Acesso ao projeto
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with .
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/33a84382-24f8-466f-a644-8baeb55438b3) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+**Você pode acessar o projeto clicando <a href="<YOUR_PROJECT_URL>">aqui</a>.</p>
