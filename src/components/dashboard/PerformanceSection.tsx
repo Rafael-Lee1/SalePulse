@@ -2,7 +2,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { EarningsWidget } from "./EarningsWidget";
-import { VisitorInsights } from "./VisitorInsights";
+import { VisitorInsights } from "./visitor-insights";
 import { useNavigation } from "@/contexts/NavigationContext";
 import { useNavigate } from "react-router-dom";
 
