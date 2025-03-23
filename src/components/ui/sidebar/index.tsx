@@ -1,5 +1,5 @@
 
-import { SidebarProvider, useSidebar } from "./sidebar-context"
+import { useSidebar } from "./sidebar-context"
 import {
   Sidebar,
   SidebarTrigger,
@@ -30,6 +30,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "./sidebar-menu-sub"
+import { SidebarProvider } from "./sidebar-provider"
 
 export {
   Sidebar,
