@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from "react";
 import { 
   Search, 
@@ -9,10 +8,10 @@ import {
   User, 
   Heart, 
   LogIn, 
-  Settings 
+  Settings,
+  FileText
 } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
-import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -39,18 +38,14 @@ export default function History() {
     { type: "login", title: "Logged in from mobile", date: "March 29, 2023", time: "09:30 AM", amount: "" },
   ];
 
-  // Filter activities based on search, type, and date
   const filterActivities = () => {
     return allActivities.filter(activity => {
-      // Search filter
       const matchesSearch = searchTerm === "" || 
         activity.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         activity.date.toLowerCase().includes(searchTerm.toLowerCase());
       
-      // Type filter
       const matchesType = activeTab === "all" || activity.type === activeTab;
       
-      // Date filter - simplified for demo
       let matchesDate = true;
       if (dateRange === "recent") {
         matchesDate = activity.date.includes("May");
@@ -64,7 +59,6 @@ export default function History() {
 
   const activities = filterActivities();
 
-  // Get icon for activity type
   const getActivityIcon = (type: string) => {
     switch (type) {
       case "order":
@@ -76,7 +70,7 @@ export default function History() {
       case "profile":
         return <User size={16} className="text-[#A9DFD8]" />;
       case "review":
-        return <Textarea size={16} className="text-[#FEB95A]" />;
+        return <FileText size={16} className="text-[#FEB95A]" />;
       case "favorite":
         return <Heart size={16} className="text-[#F2C8ED]" />;
       default:
@@ -84,7 +78,6 @@ export default function History() {
     }
   };
 
-  // Get background color for activity type
   const getActivityColor = (type: string) => {
     switch (type) {
       case "order":
@@ -104,7 +97,6 @@ export default function History() {
     }
   };
 
-  // Scroll to the latest activity when component mounts
   useEffect(() => {
     if (timelineRef.current) {
       timelineRef.current.scrollTop = 0;
