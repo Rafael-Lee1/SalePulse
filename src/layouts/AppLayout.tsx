@@ -9,9 +9,6 @@ export default function AppLayout() {
         <Sidebar />
         <Outlet />
       </div>
-      <div className="text-[rgba(255,255,255,0.8)] text-[15px] absolute right-[66px] top-3.5">
-        www.nickelfox.com
-      </div>
     </div>
   );
 }
