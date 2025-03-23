@@ -1,27 +1,44 @@
 
 import { cn } from "@/lib/utils";
+import { useNavigation } from "@/contexts/NavigationContext";
+import { Link, useLocation } from "react-router-dom";
 import { BarChart, Clock, Heart, LogOut, MessageCircle, Package, Settings, ShoppingCart, Trophy, User } from "lucide-react";
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function Sidebar({ className, ...props }: SidebarProps) {
+  const { activeTab, setActiveTab } = useNavigation();
+  const location = useLocation();
+  
+  // Set active tab based on current route when component mounts
+  React.useEffect(() => {
+    const path = location.pathname.split('/')[1] || 'dashboard';
+    setActiveTab(path);
+  }, [location.pathname, setActiveTab]);
+
   const navItems = [
-    { name: "Profile", icon: <User size={16} /> },
-    { name: "Leaderboard", icon: <Trophy size={16} /> },
-    { name: "Order", icon: <ShoppingCart size={16} /> },
-    { name: "Product", icon: <Package size={16} /> },
-    { name: "Sales Report", icon: <BarChart size={16} /> },
-    { name: "Message", icon: <MessageCircle size={16} /> },
-    { name: "Settings", icon: <Settings size={16} /> },
-    { name: "Favourite", icon: <Heart size={16} /> },
-    { name: "History", icon: <Clock size={16} /> },
-    { name: "Signout", icon: <LogOut size={16} /> },
+    { name: "Dashboard", path: "/", icon: <BarChart size={16} /> },
+    { name: "Profile", path: "/profile", icon: <User size={16} /> },
+    { name: "Leaderboard", path: "/leaderboard", icon: <Trophy size={16} /> },
+    { name: "Order", path: "/order", icon: <ShoppingCart size={16} /> },
+    { name: "Product", path: "/product", icon: <Package size={16} /> },
+    { name: "Sales Report", path: "/sales-report", icon: <BarChart size={16} /> },
+    { name: "Message", path: "/message", icon: <MessageCircle size={16} /> },
+    { name: "Settings", path: "/settings", icon: <Settings size={16} /> },
+    { name: "Favourite", path: "/favourite", icon: <Heart size={16} /> },
+    { name: "History", path: "/history", icon: <Clock size={16} /> },
+    { name: "Signout", path: "/signout", icon: <LogOut size={16} /> },
   ];
+
+  const handleNavigation = (path: string) => {
+    const tab = path === "/" ? "dashboard" : path.substring(1);
+    setActiveTab(tab);
+  };
 
   return (
     <div
       className={cn(
-        "w-[88px] h-[815px] bg-[#171821] flex flex-col relative rounded-xl max-md:w-full max-md:h-auto max-md:mb-4",
+        "w-[200px] h-[815px] bg-[#171821] flex flex-col relative rounded-xl max-md:w-full max-md:h-auto max-md:mb-4 transition-all duration-300",
         className,
       )}
       {...props}
@@ -57,20 +74,28 @@ export function Sidebar({ className, ...props }: SidebarProps) {
         </div>
       </div>
       <nav className="flex flex-col gap-2.5 p-2.5 max-md:flex-row max-md:flex-wrap max-md:justify-center">
-        <div className="w-[116px] h-9 bg-[#A9DFD8] flex items-center justify-center cursor-pointer rounded-md">
-          <span className="text-[#171821] text-sm font-medium">Dashboard</span>
-        </div>
-        <div className="flex flex-col gap-3 mt-6 max-md:flex-row max-md:flex-wrap max-md:justify-center">
-          {navItems.map((item) => (
-            <button
+        {navItems.map((item) => {
+          const isActive = 
+            (item.path === "/" && activeTab === "dashboard") || 
+            (item.path !== "/" && activeTab === item.path.substring(1));
+          
+          return (
+            <Link
               key={item.name}
-              className="flex items-center gap-2 px-4 py-2 text-[#87888C] hover:text-white hover:bg-[#21222D] rounded-md transition-colors"
+              to={item.path}
+              onClick={() => handleNavigation(item.path)}
+              className={cn(
+                "flex items-center gap-2 px-4 py-2.5 rounded-md transition-all duration-200 w-full",
+                isActive
+                  ? "bg-[#A9DFD8] text-[#171821] font-medium"
+                  : "text-[#87888C] hover:text-white hover:bg-[#21222D]"
+              )}
             >
               {item.icon}
               <span className="text-sm">{item.name}</span>
-            </button>
-          ))}
-        </div>
+            </Link>
+          );
+        })}
       </nav>
     </div>
   );
