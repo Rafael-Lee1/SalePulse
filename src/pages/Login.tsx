@@ -17,7 +17,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-[#30313A] flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-[#171821] rounded-xl p-8 shadow-lg">
+      <div className="w-full max-w-md bg-[#171821] rounded-xl p-8 max-sm:p-6 shadow-lg">
         <div className="mb-6 text-center">
           <svg
             width="38"
@@ -66,7 +66,7 @@ export default function Login() {
             />
           </div>
           
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between max-sm:flex-col max-sm:gap-3 max-sm:items-start">
             <div className="flex items-center">
               <input 
                 id="remember"

@@ -1,4 +1,8 @@
+
+import { useIsMobile } from "@/hooks/use-mobile";
+
 export function TopProducts() {
+  const isMobile = useIsMobile();
   const products = [
     {
       rank: "01",
@@ -27,12 +31,12 @@ export function TopProducts() {
   ];
 
   return (
-    <div className="flex-1 bg-[#21222D] p-5 rounded-[10px]">
+    <div className="flex-1 bg-[#21222D] p-5 max-sm:p-3 rounded-[10px]">
       <h2 className="text-white text-[15px] font-semibold mb-5">
         Top Products
       </h2>
       <div className="flex flex-col">
-        <div className="grid grid-cols-4 text-[#87888C] text-[13px] pb-2.5 border-b border-[rgba(255,255,255,0.06)]">
+        <div className="grid grid-cols-4 text-[#87888C] text-[13px] pb-2.5 border-b border-[rgba(255,255,255,0.06)] max-sm:text-[11px]">
           <div className="text-center">#</div>
           <div>Name</div>
           <div>Popularity</div>
@@ -41,11 +45,11 @@ export function TopProducts() {
         <div className="flex flex-col gap-2.5 mt-2.5">
           {products.map((product) => (
             <div key={product.rank} className="grid grid-cols-4 items-center">
-              <div className="text-white text-[13px] text-center">
+              <div className="text-white text-[13px] text-center max-sm:text-[11px]">
                 {product.rank}
               </div>
-              <div className="text-white text-[10px]">{product.name}</div>
-              <div className="w-[164px] h-px bg-[#2B2B36] relative">
+              <div className="text-white text-[10px] max-sm:text-[9px] truncate pr-2">{product.name}</div>
+              <div className="w-full max-w-[164px] h-px bg-[#2B2B36] relative">
                 <div
                   className="h-px absolute top-0"
                   style={{
@@ -55,7 +59,7 @@ export function TopProducts() {
                 />
               </div>
               <div
-                className="text-[10px] w-[38px] h-[22px] rounded border flex items-center justify-center"
+                className="text-[10px] max-sm:text-[9px] w-[38px] h-[22px] max-sm:w-[34px] max-sm:h-[20px] rounded border flex items-center justify-center"
                 style={{
                   color: product.color,
                   borderColor: product.color,

@@ -6,13 +6,16 @@ import { TopProducts } from "./TopProducts";
 import { CustomerFulfillment } from "./CustomerFulfillment";
 import { EarningsWidget } from "./EarningsWidget";
 import { VisitorInsights } from "./VisitorInsights";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export function MainContent() {
+  const isMobile = useIsMobile();
+
   return (
     <div className="flex-1">
-      <div className="w-full h-[815px] bg-[#171821] p-6 rounded-3xl max-md:h-auto overflow-y-auto">
-        <div className="flex items-center justify-between mb-10">
-          <div className="w-[504px] relative max-md:w-full">
+      <div className="w-full bg-[#171821] p-6 max-sm:p-4 rounded-3xl max-md:h-auto overflow-y-auto">
+        <div className="flex items-center justify-between mb-10 max-sm:mb-6 max-sm:flex-col max-sm:gap-4 max-sm:items-start">
+          <div className="w-[504px] relative max-lg:w-[300px] max-md:w-full">
             <div className="w-full h-11 bg-[#21222D] flex items-center px-4 rounded-lg">
               <input
                 type="text"
@@ -40,17 +43,17 @@ export function MainContent() {
         </div>
 
         <div className="flex flex-col gap-3.5">
-          <div className="flex gap-3.5 max-md:flex-col">
+          <div className="flex gap-3.5 max-lg:flex-col">
             <SalesStats />
             <LevelChart />
           </div>
 
-          <div className="flex gap-3.5 max-md:flex-col">
+          <div className="flex gap-3.5 max-lg:flex-col">
             <TopProducts />
             <CustomerFulfillment />
           </div>
 
-          <div className="flex gap-3.5 max-md:flex-col">
+          <div className="flex gap-3.5 max-lg:flex-col">
             <EarningsWidget />
             <VisitorInsights />
           </div>
