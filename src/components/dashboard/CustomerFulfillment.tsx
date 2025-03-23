@@ -55,7 +55,7 @@ export function CustomerFulfillment() {
   const [activeMonth, setActiveMonth] = useState<'last' | 'this'>('this');
 
   return (
-    <div className="w-[241px] bg-[#21222D] p-5 rounded-[10px] max-md:w-full hover:shadow-lg transition-shadow duration-300">
+    <div className="w-full bg-[#21222D] p-5 rounded-[16px] max-md:w-full hover:shadow-lg transition-shadow duration-300 border border-white/5">
       <div className="flex justify-between items-center mb-5">
         <h2 className="text-white text-[15px] font-semibold">Customer Fulfilment</h2>
         <div className="p-1.5 rounded-full bg-[#F2C8ED]/10">

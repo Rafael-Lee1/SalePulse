@@ -12,7 +12,8 @@ import {
   Settings, 
   ShoppingCart, 
   Trophy, 
-  User 
+  User,
+  ChevronRight
 } from "lucide-react";
 import { 
   Sidebar, 
@@ -21,15 +22,18 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  SidebarFooter
+  SidebarFooter,
+  SidebarTrigger
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export function AppSidebar() {
   const { activeTab, setActiveTab } = useNavigation();
   const location = useLocation();
+  const isMobile = useIsMobile();
   
   // Set active tab based on current route when component mounts
   React.useEffect(() => {
@@ -38,17 +42,17 @@ export function AppSidebar() {
   }, [location.pathname, setActiveTab]);
 
   const navItems = [
-    { name: "Dashboard", path: "/", icon: <BarChart size={16} /> },
-    { name: "Profile", path: "/profile", icon: <User size={16} /> },
-    { name: "Leaderboard", path: "/leaderboard", icon: <Trophy size={16} /> },
-    { name: "Order", path: "/order", icon: <ShoppingCart size={16} /> },
-    { name: "Product", path: "/product", icon: <Package size={16} /> },
-    { name: "Sales Report", path: "/sales-report", icon: <BarChart size={16} /> },
-    { name: "Message", path: "/message", icon: <MessageCircle size={16} /> },
-    { name: "Settings", path: "/settings", icon: <Settings size={16} /> },
-    { name: "Favourite", path: "/favourite", icon: <Heart size={16} /> },
-    { name: "History", path: "/history", icon: <Clock size={16} /> },
-    { name: "Signout", path: "/signout", icon: <LogOut size={16} /> },
+    { name: "Dashboard", path: "/", icon: <BarChart size={isMobile ? 18 : 16} /> },
+    { name: "Profile", path: "/profile", icon: <User size={isMobile ? 18 : 16} /> },
+    { name: "Leaderboard", path: "/leaderboard", icon: <Trophy size={isMobile ? 18 : 16} /> },
+    { name: "Order", path: "/order", icon: <ShoppingCart size={isMobile ? 18 : 16} /> },
+    { name: "Product", path: "/product", icon: <Package size={isMobile ? 18 : 16} /> },
+    { name: "Sales Report", path: "/sales-report", icon: <BarChart size={isMobile ? 18 : 16} /> },
+    { name: "Message", path: "/message", icon: <MessageCircle size={isMobile ? 18 : 16} /> },
+    { name: "Settings", path: "/settings", icon: <Settings size={isMobile ? 18 : 16} /> },
+    { name: "Favourite", path: "/favourite", icon: <Heart size={isMobile ? 18 : 16} /> },
+    { name: "History", path: "/history", icon: <Clock size={isMobile ? 18 : 16} /> },
+    { name: "Signout", path: "/signout", icon: <LogOut size={isMobile ? 18 : 16} /> },
   ];
 
   const handleNavigation = (path: string) => {
@@ -103,6 +107,11 @@ export function AppSidebar() {
             <circle cx="12" cy="9.10342" r="3" fill="#FC003C" />
           </svg>
         </div>
+        {isMobile && (
+          <SidebarTrigger className="flex md:hidden p-1.5 rounded-md text-[#87888C] hover:text-white hover:bg-white/10">
+            <ChevronRight size={18} />
+          </SidebarTrigger>
+        )}
       </SidebarHeader>
 
       <SidebarContent className="p-3 gap-3">
@@ -137,7 +146,7 @@ export function AppSidebar() {
                         className="flex items-center gap-2.5 w-full"
                       >
                         {item.icon}
-                        <span className="text-sm">{item.name}</span>
+                        <span className="text-sm whitespace-nowrap">{item.name}</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
@@ -156,6 +165,7 @@ export function AppSidebar() {
                 src="https://randomuser.me/api/portraits/men/32.jpg" 
                 alt="Profile" 
                 className="w-full h-full object-cover"
+                loading="lazy" // Add lazy loading for better performance
               />
             </div>
             <div className="text-xs">

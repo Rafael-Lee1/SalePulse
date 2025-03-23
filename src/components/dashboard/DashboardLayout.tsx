@@ -2,6 +2,10 @@
 import { motion } from "framer-motion";
 import { SalesStats } from "./sales-stats";
 import { VisitorInsights } from "./visitor-insights";
+import { lazy, Suspense } from "react";
+
+// Lazy load components that are further down the page
+const CustomerFulfillment = lazy(() => import("./CustomerFulfillment").then(mod => ({ default: mod.CustomerFulfillment })));
 
 // Animation variants
 const containerVariants = {
@@ -42,6 +46,13 @@ export function DashboardLayout() {
         <div className="flex flex-col gap-6">
           {/* Visitor Insights */}
           <VisitorInsights />
+          
+          {/* Customer Fulfillment - Only on larger screens in this position */}
+          <div className="hidden lg:block">
+            <Suspense fallback={<div className="h-[200px] w-full bg-[#21222D]/70 rounded-[16px] animate-pulse"></div>}>
+              <CustomerFulfillment />
+            </Suspense>
+          </div>
         </div>
         
         {/* Performance Section */}
@@ -109,10 +120,17 @@ export function DashboardLayout() {
         </div>
       </motion.div>
       
+      {/* Customer Fulfillment - On mobile, show it here */}
+      <motion.div variants={itemVariants} className="lg:hidden w-full">
+        <Suspense fallback={<div className="h-[200px] w-full bg-[#21222D]/70 rounded-[16px] animate-pulse"></div>}>
+          <CustomerFulfillment />
+        </Suspense>
+      </motion.div>
+      
       {/* Bottom Section - Detailed Breakdown */}
       <motion.div 
         variants={itemVariants}
-        className="grid grid-cols-1 md:grid-cols-3 gap-6"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
       >
         <div className="bg-[#21222D]/70 backdrop-blur-sm p-5 rounded-[16px] border border-white/5 shadow-lg">
           <h2 className="text-white text-[15px] font-semibold mb-4">Top Products</h2>

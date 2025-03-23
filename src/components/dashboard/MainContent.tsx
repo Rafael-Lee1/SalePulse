@@ -16,11 +16,16 @@ export function MainContent() {
   };
 
   return (
-    <div className="flex-1">
-      <div className="w-full bg-[#171821]/90 backdrop-blur-lg p-6 max-sm:p-4 rounded-3xl max-md:h-auto overflow-y-auto border border-white/5 shadow-xl">
+    <div className="flex-1 w-full">
+      <motion.div 
+        className="w-full bg-[#171821]/90 backdrop-blur-lg p-6 max-sm:p-3 rounded-3xl max-md:h-auto overflow-y-auto border border-white/5 shadow-xl"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <DashboardHeader />
         <DashboardLayout />
-      </div>
+      </motion.div>
     </div>
   );
 }
