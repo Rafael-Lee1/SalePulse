@@ -28,9 +28,17 @@ export default function Dashboard() {
     >
       {isLoading ? (
         <div className="w-full h-[60vh] flex items-center justify-center">
-          <div className="relative w-16 h-16">
-            <div className="absolute top-0 left-0 w-full h-full border-4 border-[#A9DFD8] border-t-transparent rounded-full animate-spin"></div>
-          </div>
+          <motion.div 
+            className="relative w-16 h-16"
+            animate={{ rotate: 360 }}
+            transition={{ 
+              duration: 1.5, 
+              repeat: Infinity, 
+              ease: "linear" 
+            }}
+          >
+            <div className="absolute top-0 left-0 w-full h-full border-4 border-[#A9DFD8] border-t-transparent rounded-full"></div>
+          </motion.div>
         </div>
       ) : (
         <MainContent />

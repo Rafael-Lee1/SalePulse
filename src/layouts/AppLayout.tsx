@@ -24,9 +24,9 @@ export default function AppLayout() {
           <AppSidebar />
           <SidebarInset className="flex-1 rounded-xl overflow-hidden">
             <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
               className="w-full h-full bg-[#30313A]/50 backdrop-blur-sm border border-white/5 rounded-xl p-4"
             >
               <Outlet />
