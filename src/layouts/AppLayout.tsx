@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { AppSidebar } from "@/components/dashboard/AppSidebar";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import { motion } from "framer-motion";
 
 export default function AppLayout() {
   const isMobile = useIsMobile();
@@ -21,8 +22,15 @@ export default function AppLayout() {
       <SidebarProvider>
         <div className="flex w-full gap-6">
           <AppSidebar />
-          <SidebarInset className="flex-1 rounded-xl overflow-hidden bg-[#30313A]/50 backdrop-blur-sm border border-white/5">
-            <Outlet />
+          <SidebarInset className="flex-1 rounded-xl overflow-hidden">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4 }}
+              className="w-full h-full bg-[#30313A]/50 backdrop-blur-sm border border-white/5 rounded-xl p-4"
+            >
+              <Outlet />
+            </motion.div>
           </SidebarInset>
         </div>
       </SidebarProvider>

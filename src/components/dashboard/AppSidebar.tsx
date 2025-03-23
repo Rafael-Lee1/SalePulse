@@ -73,7 +73,7 @@ export function AppSidebar() {
   };
 
   return (
-    <Sidebar className="w-[240px] max-w-[250px] bg-[#171821]/90 backdrop-blur-lg border-r border-white/5 rounded-xl overflow-hidden">
+    <Sidebar className="w-[240px] max-w-[250px] bg-[#171821]/90 backdrop-blur-lg border-r border-white/5 rounded-xl overflow-hidden shadow-lg shadow-black/30">
       <SidebarHeader className="p-[25px] justify-between">
         <div>
           <svg
@@ -134,6 +134,7 @@ export function AppSidebar() {
                       <Link
                         to={item.path}
                         onClick={() => handleNavigation(item.path)}
+                        className="flex items-center gap-2.5 w-full"
                       >
                         {item.icon}
                         <span className="text-sm">{item.name}</span>
@@ -150,7 +151,7 @@ export function AppSidebar() {
       <SidebarFooter className="p-4 border-t border-white/5 mt-auto">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full overflow-hidden border border-white/10">
+            <div className="w-8 h-8 rounded-full overflow-hidden border border-white/10 bg-gradient-to-br from-[#252634] to-[#171821]">
               <img 
                 src="https://randomuser.me/api/portraits/men/32.jpg" 
                 alt="Profile" 
@@ -162,8 +163,8 @@ export function AppSidebar() {
               <div className="text-[#87888C]">Admin</div>
             </div>
           </div>
-          <button className="p-1.5 rounded-md hover:bg-white/5 transition-colors">
-            <Settings size={14} className="text-[#87888C]" />
+          <button className="p-1.5 rounded-md hover:bg-white/10 transition-colors text-[#87888C] hover:text-white">
+            <Settings size={14} />
           </button>
         </div>
       </SidebarFooter>
