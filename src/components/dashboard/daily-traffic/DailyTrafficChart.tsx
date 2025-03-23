@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
@@ -7,6 +6,7 @@ import {
 } from "recharts";
 import { TrendingUp, Clock, Activity } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { AnimatedChart, dataPointAnimations } from "@/components/ui/chart/animated-chart";
 
 // Type for the traffic data points
 interface TrafficDataPoint {
@@ -183,107 +183,102 @@ export function DailyTrafficChart() {
         onMouseLeave={() => setIsHovering(false)}
         onClick={handleChartClick}
       >
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart
-            data={data}
-            margin={{ top: 5, right: 5, left: 0, bottom: 5 }}
-          >
-            <defs>
-              <linearGradient id="colorSales" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#A9DFD8" stopOpacity={0.8}/>
-                <stop offset="95%" stopColor="#A9DFD8" stopOpacity={0}/>
-              </linearGradient>
-              <linearGradient id="colorReturns" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#F97316" stopOpacity={0.8}/>
-                <stop offset="95%" stopColor="#F97316" stopOpacity={0}/>
-              </linearGradient>
-              <linearGradient id="colorTraffic" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#0EA5E9" stopOpacity={0.8}/>
-                <stop offset="95%" stopColor="#0EA5E9" stopOpacity={0}/>
-              </linearGradient>
-            </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#2B2B36" vertical={false} />
-            <XAxis 
-              dataKey="time" 
-              axisLine={false}
-              tickLine={false}
-              tick={{ fill: '#87888C', fontSize: isMobile ? 8 : 10 }}
-              padding={{ left: 10, right: 10 }}
-              tickFormatter={(value, index) => isMobile ? (index % 2 === 0 ? value : '') : value}
-            />
-            <YAxis 
-              axisLine={false}
-              tickLine={false}
-              tick={{ fill: '#87888C', fontSize: isMobile ? 8 : 10 }}
-              width={30}
-              // Format numbers on mobile
-              tickFormatter={(value) => isMobile && value > 100 ? `${Math.floor(value/10)}0` : value}
-            />
-            <Tooltip content={<CustomTooltip />} />
-            <Area 
-              type="monotone" 
-              dataKey="sales" 
-              stroke="#A9DFD8" 
-              strokeWidth={2}
-              fillOpacity={0.3} 
-              fill="url(#colorSales)" 
-              activeDot={{ 
-                r: isMobile ? 4 : 6, 
-                stroke: '#171821', 
-                strokeWidth: 2, 
-                fill: '#A9DFD8',
-                // Add a pulse animation to the active dot
-                style: { 
-                  filter: isHovering ? 'drop-shadow(0 0 3px #A9DFD8)' : 'none'
-                }
-              }} 
-            />
-            <Area 
-              type="monotone" 
-              dataKey="returns" 
-              stroke="#F97316" 
-              strokeWidth={2}
-              fillOpacity={0.1} 
-              fill="url(#colorReturns)" 
-              activeDot={{ 
-                r: isMobile ? 3 : 5, 
-                stroke: '#171821', 
-                strokeWidth: 2, 
-                fill: '#F97316' 
-              }} 
-            />
-            <Area 
-              type="monotone" 
-              dataKey="traffic" 
-              stroke="#0EA5E9" 
-              strokeWidth={2}
-              fillOpacity={0.2} 
-              fill="url(#colorTraffic)" 
-              activeDot={{ 
-                r: isMobile ? 3 : 5, 
-                stroke: '#171821', 
-                strokeWidth: 2, 
-                fill: '#0EA5E9' 
-              }} 
-            />
-          </AreaChart>
-        </ResponsiveContainer>
-        
-        {/* Animated pulse to indicate real-time data */}
-        <div className="absolute top-0 right-0 mt-2 mr-2">
-          <motion.div 
-            className="w-2 h-2 rounded-full bg-[#0EA5E9]"
-            animate={{ 
-              scale: [1, 1.5, 1],
-              opacity: [0.7, 1, 0.7]
-            }}
-            transition={{ 
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-        </div>
+        <AnimatedChart>
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart
+              data={data}
+              margin={{ top: 5, right: 5, left: 0, bottom: 5 }}
+            >
+              <defs>
+                <linearGradient id="colorSales" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#A9DFD8" stopOpacity={0.8}/>
+                  <stop offset="95%" stopColor="#A9DFD8" stopOpacity={0}/>
+                </linearGradient>
+                <linearGradient id="colorReturns" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#F97316" stopOpacity={0.8}/>
+                  <stop offset="95%" stopColor="#F97316" stopOpacity={0}/>
+                </linearGradient>
+                <linearGradient id="colorTraffic" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#0EA5E9" stopOpacity={0.8}/>
+                  <stop offset="95%" stopColor="#0EA5E9" stopOpacity={0}/>
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="#2B2B36" vertical={false} />
+              <XAxis 
+                dataKey="time" 
+                axisLine={false}
+                tickLine={false}
+                tick={{ fill: '#87888C', fontSize: isMobile ? 8 : 10 }}
+                padding={{ left: 10, right: 10 }}
+                tickFormatter={(value, index) => isMobile ? (index % 2 === 0 ? value : '') : value}
+              />
+              <YAxis 
+                axisLine={false}
+                tickLine={false}
+                tick={{ fill: '#87888C', fontSize: isMobile ? 8 : 10 }}
+                width={30}
+                // Format numbers on mobile
+                tickFormatter={(value) => isMobile && value > 100 ? `${Math.floor(value/10)}0` : value}
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Area 
+                type="monotone" 
+                dataKey="sales" 
+                stroke="#A9DFD8" 
+                strokeWidth={2}
+                fillOpacity={0.3} 
+                fill="url(#colorSales)" 
+                activeDot={{ 
+                  r: isMobile ? 4 : 6, 
+                  stroke: '#171821', 
+                  strokeWidth: 2, 
+                  fill: '#A9DFD8',
+                  // Add a pulse animation to the active dot
+                  style: { 
+                    filter: isHovering ? 'drop-shadow(0 0 3px #A9DFD8)' : 'none'
+                  }
+                }} 
+                isAnimationActive={true}
+                animationDuration={1000}
+                animationEasing="ease-out"
+              />
+              <Area 
+                type="monotone" 
+                dataKey="returns" 
+                stroke="#F97316" 
+                strokeWidth={2}
+                fillOpacity={0.1} 
+                fill="url(#colorReturns)" 
+                activeDot={{ 
+                  r: isMobile ? 3 : 5, 
+                  stroke: '#171821', 
+                  strokeWidth: 2, 
+                  fill: '#F97316' 
+                }} 
+                isAnimationActive={true}
+                animationDuration={1000}
+                animationEasing="ease-out"
+              />
+              <Area 
+                type="monotone" 
+                dataKey="traffic" 
+                stroke="#0EA5E9" 
+                strokeWidth={2}
+                fillOpacity={0.2} 
+                fill="url(#colorTraffic)" 
+                activeDot={{ 
+                  r: isMobile ? 3 : 5, 
+                  stroke: '#171821', 
+                  strokeWidth: 2, 
+                  fill: '#0EA5E9' 
+                }} 
+                isAnimationActive={true}
+                animationDuration={1000}
+                animationEasing="ease-out"
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </AnimatedChart>
       </div>
       
       {/* Data breakdown section - visible when a point is clicked */}
@@ -358,3 +353,4 @@ export function DailyTrafficChart() {
     </motion.div>
   );
 }
+

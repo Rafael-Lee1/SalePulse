@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import { Line, LineChart, ResponsiveContainer, Tooltip, Area, AreaChart } from "recharts";
 import { TrendingUp } from "lucide-react";
+import { motion } from "framer-motion";
+import { AnimatedChart } from "@/components/ui/chart/animated-chart";
 
 export function CustomerFulfillment() {
   const [chartData, setChartData] = useState([
@@ -20,7 +22,7 @@ export function CustomerFulfillment() {
     { name: "Week 5", lastMonth: 4087, thisMonth: 5506 },
   ];
   
-  // Animate chart data
+  // Initial animation
   useEffect(() => {
     const interval = setInterval(() => {
       setChartData(prev => {
@@ -52,10 +54,33 @@ export function CustomerFulfillment() {
     return () => clearInterval(interval);
   }, []);
   
+  // Real-time data simulation
+  useEffect(() => {
+    // Only start real-time updates once initial animation is complete
+    const allReachedTarget = chartData.every((item, index) => 
+      item.lastMonth === targetData[index].lastMonth && 
+      item.thisMonth === targetData[index].thisMonth
+    );
+    
+    if (!allReachedTarget) return;
+    
+    const interval = setInterval(() => {
+      setChartData(prev => 
+        prev.map(item => ({
+          ...item,
+          lastMonth: item.lastMonth + (Math.random() > 0.7 ? 1 : -1) * Math.floor(Math.random() * 50),
+          thisMonth: item.thisMonth + (Math.random() > 0.6 ? 1 : -1) * Math.floor(Math.random() * 70)
+        }))
+      );
+    }, 2000);
+    
+    return () => clearInterval(interval);
+  }, [chartData]);
+  
   const [activeMonth, setActiveMonth] = useState<'last' | 'this'>('this');
 
   return (
-    <div className="w-full bg-[#21222D] p-5 rounded-[16px] max-md:w-full hover:shadow-lg transition-shadow duration-300 border border-white/5">
+    <div className="w-full bg-[#21222D] p-5 rounded-[16px] max-md:w-full hover:shadow-lg transition-shadow duration-300 border border-white/5 relative">
       <div className="flex justify-between items-center mb-5">
         <h2 className="text-white text-[15px] font-semibold">Customer Fulfilment</h2>
         <div className="p-1.5 rounded-full bg-[#F2C8ED]/10">
@@ -64,57 +89,59 @@ export function CustomerFulfillment() {
       </div>
       
       <div className="relative h-[106px] mb-[20px]">
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={chartData} margin={{ top: 5, right: 0, left: 0, bottom: 0 }}>
-            <defs>
-              <linearGradient id="colorLastMonth" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#A9DFD8" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#A9DFD8" stopOpacity={0} />
-              </linearGradient>
-              <linearGradient id="colorThisMonth" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#F2C8ED" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#F2C8ED" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <Tooltip 
-              contentStyle={{ 
-                backgroundColor: '#171821', 
-                border: 'none', 
-                borderRadius: '5px', 
-                color: 'white',
-                fontSize: '10px',
-                padding: '8px'
-              }}
-              labelStyle={{ color: '#A9DFD8', fontSize: '10px', fontWeight: 'bold' }}
-            />
-            <Area 
-              type="monotone" 
-              dataKey="lastMonth" 
-              stroke="#A9DFD8" 
-              strokeWidth={2} 
-              fillOpacity={1}
-              fill="url(#colorLastMonth)"
-              dot={{ r: 2, fill: "#A9DFD8" }}
-              activeDot={{ r: 4, fill: "#A9DFD8" }}
-              isAnimationActive={true}
-              animationDuration={1000}
-              animationEasing="ease-out"
-            />
-            <Area 
-              type="monotone" 
-              dataKey="thisMonth" 
-              stroke="#F2C8ED" 
-              strokeWidth={2} 
-              fillOpacity={1}
-              fill="url(#colorThisMonth)"
-              dot={{ r: 2, fill: "#F2C8ED" }}
-              activeDot={{ r: 4, fill: "#F2C8ED" }}
-              isAnimationActive={true}
-              animationDuration={1000}
-              animationEasing="ease-out"
-            />
-          </AreaChart>
-        </ResponsiveContainer>
+        <AnimatedChart>
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={chartData} margin={{ top: 5, right: 0, left: 0, bottom: 0 }}>
+              <defs>
+                <linearGradient id="colorLastMonth" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#A9DFD8" stopOpacity={0.3} />
+                  <stop offset="95%" stopColor="#A9DFD8" stopOpacity={0} />
+                </linearGradient>
+                <linearGradient id="colorThisMonth" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#F2C8ED" stopOpacity={0.3} />
+                  <stop offset="95%" stopColor="#F2C8ED" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <Tooltip 
+                contentStyle={{ 
+                  backgroundColor: '#171821', 
+                  border: 'none', 
+                  borderRadius: '5px', 
+                  color: 'white',
+                  fontSize: '10px',
+                  padding: '8px'
+                }}
+                labelStyle={{ color: '#A9DFD8', fontSize: '10px', fontWeight: 'bold' }}
+              />
+              <Area 
+                type="monotone" 
+                dataKey="lastMonth" 
+                stroke="#A9DFD8" 
+                strokeWidth={2} 
+                fillOpacity={1}
+                fill="url(#colorLastMonth)"
+                dot={{ r: 2, fill: "#A9DFD8" }}
+                activeDot={{ r: 4, fill: "#A9DFD8" }}
+                isAnimationActive={true}
+                animationDuration={1000}
+                animationEasing="ease-out"
+              />
+              <Area 
+                type="monotone" 
+                dataKey="thisMonth" 
+                stroke="#F2C8ED" 
+                strokeWidth={2} 
+                fillOpacity={1}
+                fill="url(#colorThisMonth)"
+                dot={{ r: 2, fill: "#F2C8ED" }}
+                activeDot={{ r: 4, fill: "#F2C8ED" }}
+                isAnimationActive={true}
+                animationDuration={1000}
+                animationEasing="ease-out"
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </AnimatedChart>
       </div>
       
       <div className="flex justify-between items-center pt-3 border-t border-[rgba(255,255,255,0.06)]">
@@ -126,7 +153,7 @@ export function CustomerFulfillment() {
             <div className="w-1.5 h-1.5 bg-[#A9DFD8] rounded-full" />
             <span className="text-[#A0A0A0] text-[10px]">Last Month</span>
           </div>
-          <span className="text-white text-[10px] font-medium">$4,087</span>
+          <span className="text-white text-[10px] font-medium">${Math.floor(chartData[4]?.lastMonth).toLocaleString()}</span>
         </div>
         
         <div 
@@ -137,9 +164,23 @@ export function CustomerFulfillment() {
             <div className="w-1.5 h-1.5 bg-[#F2C8ED] rounded-full" />
             <span className="text-[#A0A0A0] text-[10px]">This Month</span>
           </div>
-          <span className="text-white text-[10px] font-medium">$5,506</span>
+          <span className="text-white text-[10px] font-medium">${Math.floor(chartData[4]?.thisMonth).toLocaleString()}</span>
         </div>
       </div>
+      
+      {/* Animated pulse to indicate real-time data */}
+      <motion.div
+        className="absolute top-5 right-14 w-2 h-2 rounded-full bg-[#F2C8ED]"
+        animate={{ 
+          scale: [1, 1.5, 1],
+          opacity: [0.7, 1, 0.7]
+        }}
+        transition={{ 
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
     </div>
   );
 }

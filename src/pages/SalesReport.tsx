@@ -1,37 +1,176 @@
 
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
+import { AnimatedChart } from '@/components/ui/chart/animated-chart';
+
 export default function SalesReport() {
+  const [salesData, setSalesData] = useState([
+    { name: 'Jan', sales: 24200 },
+    { name: 'Feb', sales: 28300 },
+    { name: 'Mar', sales: 27100 },
+    { name: 'Apr', sales: 32600 },
+    { name: 'May', sales: 30800 },
+    { name: 'Jun', sales: 34100 },
+    { name: 'Jul', sales: 31900 },
+    { name: 'Aug', sales: 35700 },
+    { name: 'Sep', sales: 33400 },
+    { name: 'Oct', sales: 37800 },
+    { name: 'Nov', sales: 36500 },
+    { name: 'Dec', sales: 48284 },
+  ]);
+  
+  // Simulate real-time data updates
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSalesData(prevData => 
+        prevData.map(item => ({
+          ...item,
+          sales: item.sales + (Math.random() > 0.5 ? 1 : -1) * Math.floor(Math.random() * 500)
+        }))
+      );
+    }, 2000);
+    
+    return () => clearInterval(interval);
+  }, []);
+  
+  // Calculate summary values
+  const totalSales = salesData.reduce((sum, item) => sum + item.sales, 0);
+  const revenue = Math.round(totalSales * 0.8);
+  const expenses = Math.round(totalSales * 0.2);
+  const profit = revenue - expenses;
+
   return (
     <div className="flex-1">
       <div className="w-full h-[815px] bg-[#171821] p-6 rounded-3xl max-md:h-auto overflow-y-auto">
         <h1 className="text-xl font-bold text-white mb-6">Sales Report</h1>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <div className="bg-[#21222D] p-4 rounded-[10px]">
+          <motion.div 
+            className="bg-[#21222D] p-4 rounded-[10px]"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
             <h3 className="text-[#87888C] text-sm">Total Sales</h3>
-            <p className="text-white text-2xl font-bold">$48,284</p>
-          </div>
-          <div className="bg-[#21222D] p-4 rounded-[10px]">
+            <p className="text-white text-2xl font-bold">${totalSales.toLocaleString()}</p>
+          </motion.div>
+          <motion.div 
+            className="bg-[#21222D] p-4 rounded-[10px]"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+          >
             <h3 className="text-[#87888C] text-sm">Revenue</h3>
-            <p className="text-[#A9DFD8] text-2xl font-bold">$38,658</p>
-          </div>
-          <div className="bg-[#21222D] p-4 rounded-[10px]">
+            <p className="text-[#A9DFD8] text-2xl font-bold">${revenue.toLocaleString()}</p>
+          </motion.div>
+          <motion.div 
+            className="bg-[#21222D] p-4 rounded-[10px]"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.2 }}
+          >
             <h3 className="text-[#87888C] text-sm">Expenses</h3>
-            <p className="text-[#FEB95A] text-2xl font-bold">$9,626</p>
-          </div>
-          <div className="bg-[#21222D] p-4 rounded-[10px]">
+            <p className="text-[#FEB95A] text-2xl font-bold">${expenses.toLocaleString()}</p>
+          </motion.div>
+          <motion.div 
+            className="bg-[#21222D] p-4 rounded-[10px]"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.3 }}
+          >
             <h3 className="text-[#87888C] text-sm">Profit</h3>
-            <p className="text-[#F2C8ED] text-2xl font-bold">$29,032</p>
-          </div>
+            <p className="text-[#F2C8ED] text-2xl font-bold">${profit.toLocaleString()}</p>
+          </motion.div>
         </div>
         
-        <div className="bg-[#21222D] p-5 rounded-[10px] mb-6">
+        <motion.div 
+          className="bg-[#21222D] p-5 rounded-[10px] mb-6 relative"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
+        >
           <h2 className="text-white text-[15px] font-semibold mb-5">Sales Overview</h2>
-          <div className="h-64 w-full bg-[#171821] rounded-md flex items-center justify-center">
-            <p className="text-white">Sales Chart Placeholder</p>
+          <div className="h-64 w-full">
+            <AnimatedChart>
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={salesData} margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
+                  <defs>
+                    <linearGradient id="colorSalesReport" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#A9DFD8" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="#A9DFD8" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#2B2B36" />
+                  <XAxis 
+                    dataKey="name" 
+                    stroke="#87888C" 
+                    tick={{ fill: '#87888C', fontSize: 12 }}
+                    axisLine={{ stroke: '#2B2B36' }}
+                    tickLine={false}
+                  />
+                  <YAxis 
+                    stroke="#87888C" 
+                    tick={{ fill: '#87888C', fontSize: 12 }}
+                    axisLine={{ stroke: '#2B2B36' }}
+                    tickLine={false}
+                    tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+                  />
+                  <Tooltip
+                    contentStyle={{ 
+                      backgroundColor: '#171821', 
+                      border: 'none', 
+                      borderRadius: '8px', 
+                      color: 'white',
+                      padding: '8px 12px'
+                    }}
+                    labelStyle={{ color: '#A9DFD8', fontWeight: 600, marginBottom: 5 }}
+                    formatter={(value) => [`$${value.toLocaleString()}`, 'Sales']}
+                    cursor={{ stroke: '#A9DFD8', strokeWidth: 1, strokeDasharray: '5 5' }}
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="sales"
+                    stroke="#A9DFD8"
+                    fillOpacity={1}
+                    fill="url(#colorSalesReport)"
+                    strokeWidth={2}
+                    activeDot={{ 
+                      r: 6, 
+                      stroke: '#171821', 
+                      strokeWidth: 2, 
+                      fill: '#A9DFD8'
+                    }}
+                    isAnimationActive={true}
+                    animationDuration={1000}
+                    animationEasing="ease-out"
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </AnimatedChart>
           </div>
-        </div>
+          
+          {/* Animated pulse to indicate real-time data */}
+          <motion.div
+            className="absolute top-5 right-5 w-2 h-2 rounded-full bg-[#A9DFD8]"
+            animate={{ 
+              scale: [1, 1.5, 1],
+              opacity: [0.7, 1, 0.7]
+            }}
+            transition={{ 
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+        </motion.div>
         
-        <div className="bg-[#21222D] p-5 rounded-[10px]">
+        <motion.div 
+          className="bg-[#21222D] p-5 rounded-[10px]"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.4 }}
+        >
           <h2 className="text-white text-[15px] font-semibold mb-5">Top Selling Products</h2>
           
           <div className="overflow-x-auto">
@@ -56,7 +195,7 @@ export default function SalesReport() {
               </tbody>
             </table>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
