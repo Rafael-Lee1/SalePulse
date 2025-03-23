@@ -7,6 +7,12 @@ import {
   ChartLegendContent,
   ChartStyle,
   ChartConfig,
+  AnimatedChart,
+  AnimatedChartContent, 
+  ChartLoader,
+  chartAnimationVariants,
+  dataPulseAnimation,
+  dataPointAnimation
 } from "./chart/index"
 
 export {
@@ -16,6 +22,12 @@ export {
   ChartLegend,
   ChartLegendContent,
   ChartStyle,
+  AnimatedChart,
+  AnimatedChartContent,
+  ChartLoader,
+  chartAnimationVariants,
+  dataPulseAnimation,
+  dataPointAnimation
 }
 
 export type { ChartConfig }
