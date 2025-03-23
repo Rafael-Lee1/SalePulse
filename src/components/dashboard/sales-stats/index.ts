@@ -1,13 +1,27 @@
 
-export { SalesStatsContainer } from './SalesStatsContainer';
-export { SalesChartContainer } from './SalesChartContainer';
-export { SalesFilterBar } from './SalesFilterBar';
-export { StatsCardGrid } from './StatsCardGrid';
-export { StatCard } from './StatCard';
-export { StatCardIcon } from './StatCardIcon';
-export { StatCardProgress } from './StatCardProgress';
-export { StatCardChangeIndicator } from './StatCardChangeIndicator';
-export { StatCardMiniChart } from './StatCardMiniChart';
+// First import all components
+import { SalesStatsContainer } from './SalesStatsContainer';
+import { SalesChartContainer } from './SalesChartContainer';
+import { SalesFilterBar } from './SalesFilterBar';
+import { StatsCardGrid } from './StatsCardGrid';
+import { StatCard } from './StatCard';
+import { StatCardIcon } from './StatCardIcon';
+import { StatCardProgress } from './StatCardProgress';
+import { StatCardChangeIndicator } from './StatCardChangeIndicator';
+import { StatCardMiniChart } from './StatCardMiniChart';
+
+// Then re-export them
+export { 
+  SalesStatsContainer,
+  SalesChartContainer,
+  SalesFilterBar,
+  StatsCardGrid,
+  StatCard,
+  StatCardIcon,
+  StatCardProgress,
+  StatCardChangeIndicator,
+  StatCardMiniChart
+};
 
 // Re-export for backward compatibility
 export const SalesStats = SalesStatsContainer;
