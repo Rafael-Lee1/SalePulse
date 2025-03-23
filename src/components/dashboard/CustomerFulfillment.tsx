@@ -1,13 +1,48 @@
+
+import { Line, LineChart, ResponsiveContainer, Tooltip } from "recharts";
+
 export function CustomerFulfillment() {
+  const data = [
+    { name: "Week 1", lastMonth: 3200, thisMonth: 3800 },
+    { name: "Week 2", lastMonth: 3600, thisMonth: 4100 },
+    { name: "Week 3", lastMonth: 3400, thisMonth: 4700 },
+    { name: "Week 4", lastMonth: 4000, thisMonth: 5200 },
+    { name: "Week 5", lastMonth: 4087, thisMonth: 5506 },
+  ];
+
   return (
     <div className="w-[241px] bg-[#21222D] p-5 rounded-[10px] max-md:w-full">
       <h2 className="text-white text-[15px] font-semibold mb-5">
         Customer Fulfilment
       </h2>
       <div className="relative h-[106px] mb-[20px]">
-        {/* Simplified version of the graph for demonstration */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#A9DFD8] to-transparent opacity-20" />
-        <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-b from-[#F2C8ED] to-transparent opacity-20" />
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={data}>
+            <Tooltip 
+              contentStyle={{ 
+                backgroundColor: '#171821', 
+                border: 'none', 
+                borderRadius: '5px', 
+                color: 'white' 
+              }}
+              labelStyle={{ color: '#A9DFD8' }}
+            />
+            <Line 
+              type="monotone" 
+              dataKey="lastMonth" 
+              stroke="#A9DFD8" 
+              strokeWidth={2} 
+              dot={false} 
+            />
+            <Line 
+              type="monotone" 
+              dataKey="thisMonth" 
+              stroke="#F2C8ED" 
+              strokeWidth={2} 
+              dot={false} 
+            />
+          </LineChart>
+        </ResponsiveContainer>
       </div>
       <div className="flex justify-between items-center pt-3 border-t border-[rgba(255,255,255,0.06)]">
         <div className="flex flex-col items-center">

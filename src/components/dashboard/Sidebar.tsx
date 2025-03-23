@@ -1,8 +1,23 @@
+
 import { cn } from "@/lib/utils";
+import { BarChart, Clock, Heart, LogOut, MessageCircle, Package, Settings, ShoppingCart, Trophy, User } from "lucide-react";
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function Sidebar({ className, ...props }: SidebarProps) {
+  const navItems = [
+    { name: "Profile", icon: <User size={16} /> },
+    { name: "Leaderboard", icon: <Trophy size={16} /> },
+    { name: "Order", icon: <ShoppingCart size={16} /> },
+    { name: "Product", icon: <Package size={16} /> },
+    { name: "Sales Report", icon: <BarChart size={16} /> },
+    { name: "Message", icon: <MessageCircle size={16} /> },
+    { name: "Settings", icon: <Settings size={16} /> },
+    { name: "Favourite", icon: <Heart size={16} /> },
+    { name: "History", icon: <Clock size={16} /> },
+    { name: "Signout", icon: <LogOut size={16} /> },
+  ];
+
   return (
     <div
       className={cn(
@@ -46,22 +61,12 @@ export function Sidebar({ className, ...props }: SidebarProps) {
           <span className="text-[#171821] text-sm font-medium">Dashboard</span>
         </div>
         <div className="flex flex-col gap-3 mt-6 max-md:flex-row max-md:flex-wrap max-md:justify-center">
-          {[
-            { name: "Profile", icon: "user" },
-            { name: "Leaderboard", icon: "trophy" },
-            { name: "Order", icon: "shopping-cart" },
-            { name: "Product", icon: "package" },
-            { name: "Sales Report", icon: "bar-chart" },
-            { name: "Message", icon: "message-circle" },
-            { name: "Settings", icon: "settings" },
-            { name: "Favourite", icon: "heart" },
-            { name: "History", icon: "clock" },
-            { name: "Signout", icon: "log-out" },
-          ].map((item) => (
+          {navItems.map((item) => (
             <button
               key={item.name}
               className="flex items-center gap-2 px-4 py-2 text-[#87888C] hover:text-white hover:bg-[#21222D] rounded-md transition-colors"
             >
+              {item.icon}
               <span className="text-sm">{item.name}</span>
             </button>
           ))}
