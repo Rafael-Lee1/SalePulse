@@ -17,4 +17,4 @@ A plataforma também é altamente responsiva, garantindo uma experiência de usu
 
 # 📁 Acesso ao projeto
 
-**Você pode acessar o projeto clicando <a href="<YOUR_PROJECT_URL>">aqui</a>.</p>
+**Você pode acessar o projeto clicando <a href="https://salepulse-production.up.railway.app/">aqui</a>.</p>
